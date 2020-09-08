@@ -1,0 +1,10 @@
+{
+    "bootstrap_servers": "192.168.99.100:9092",
+    "algorithm": "sklearn.linear_model.Ridge()",
+    "prediction_horizons": [12, 24, 36],
+    "evaluation_period": 512,
+    "evaluation_split_point": 0.8,
+    "sensors": [
+        "N1"
+    ]
+}
