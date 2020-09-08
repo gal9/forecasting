@@ -82,6 +82,9 @@ Example of cluster config file:
 
 ## Requirements
 
-- python 2.7.x
-- kafka-python-1.3.4
-- Anaconda2-4.4.0
+* python 2.7.x
+* kafka-python-1.3.4
+* Anaconda2-4.4.0
+    * numpy
+    * scipy
+    * pandas
