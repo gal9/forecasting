@@ -1,8 +1,8 @@
-# Scikit Learn models
+# Batch Learning Component
 
 Enables using external predictive models from  [Scikit Learn](http://scikit-learn.org/stable/index.html) library (for example [Random Forest Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)) implementation . Fitting, saving, loading and live predict is enabled. Live predictions works via Kafka stream.
 
-Predictive model is designed in an decentralized fashion, meaning that several instances (submodels) will be created and used for each specifc sensor and horizon (# submodels = # sensors * # horiozons). Decentralized architecture enables paralelization.
+Predictive model is designed in an decentralized fashion, meaning that several instances (submodels) will be created and used for each specifc sensor and horizon (`#submodels = #sensors * #horiozons`). Decentralized architecture enables paralelization.
 
 #### Usage
 ```main.py [-h] [-c CONFIG] [-f] [-s] [-l] [-p]```
@@ -21,7 +21,7 @@ Predictive model is designed in an decentralized fashion, meaning that several i
 Example of config file, where the useres spcifies kafka server address, which scikit algorithm to use, prediction horizons and sesnsors for which the model will be learned/loaded/saved/predicted.
 
 Parameters:
-- **bootstrap_servers**: string (or list of �host[:port]� strings) that the consumer should contact to bootstrap initial cluster metadata
+- **bootstrap_servers**: string (or list of `host[:port]` strings) that the consumer should contact to bootstrap initial cluster metadata
 - **algorithm**: string as scikit-learn model constructor with initialization parameters
 - **evaluation_periode**: define time periode (in hours) for which the model will be evaluated during live predictions (evaluations metrics added to ouput record)
 - **evaluation_split_point**: define training and testing spliting point in the dataset, for model evaluation during learning phase (fit takes twice as long time)
@@ -58,10 +58,10 @@ Example of cluster config file:
 ```
 
 ## Assumptions:
-- **Training data**: all the training files should be stored in a subfolder called `/data/fused`. Data should be stored as json objects per line (e.g. `{�timestamp�: 1459926000, �ftr_vector�: [1, 2, 3]}`). Separate file for each sensor and prediction horizon. Files should be named the same as input kafka topics, that is `{sensor}_{horizon}h` (e.g. �sensor1_3h.json�)
-- **Models**: all the models are stored in a subfolder called `/models`.  Each sensor and horizon has its own model. The name of the models is composed of sensor name and prediction horizon, `model_{sensor}_{horizon}h` (e.g. �model_sensor1_3h�)
+- **Training data**: all the training files should be stored in a subfolder called `/data/fused`. Data should be stored as json objects per line (e.g. `{ "timestamp": 1459926000, "ftr_vector": [1, 2, 3]}`). Separate file for each sensor and prediction horizon. Files should be named the same as input kafka topics, that is `{sensor}_{horizon}h` (e.g. `sensor1_3h.json`)
+- **Models**: all the models are stored in a subfolder called `/models`.  Each sensor and horizon has its own model. The name of the models is composed of sensor name and prediction horizon, `model_{sensor}_{horizon}h` (e.g. `model_sensor1_3h`)
 - **Input kafka topic**: The names of input kafka topics on which the prototype is listening for live data should be in the same format as trainng data file names, that is `features_{sensor}_{horizon}h`.
-- **Output kafka topic**: Predictions are sent on different topics based on a sensor names, that is `{sensor}` (e.g. �sensor1�).
+- **Output kafka topic**: Predictions are sent on different topics based on a sensor names, that is `{sensor}` (e.g. `sensor1`).
 
 ## Examples:
 
