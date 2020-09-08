@@ -22,7 +22,7 @@ def create_testing_file():
 
     #subdir = '../nrgStream-fusion/data'
     #subdir = './test/data'
-    subdir= os.path.join('.', 'test', 'data')
+    subdir = os.path.join('.', 'test', 'data')
     if not os.path.isdir(subdir):
         os.makedirs(subdir)
         
@@ -221,7 +221,7 @@ class TestModelEvaluation(SimpleWidgetTestCase):
     def test_predictability_index(self):
 
         # fit the model
-        f = create_testing_file()
+        f = create_testing_file()        
         score = self.model.fit(f)
 
         # test predictability index

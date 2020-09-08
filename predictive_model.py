@@ -33,7 +33,7 @@ class PredictiveModel:
 
             # set datetime as index
             data.set_index('timestamp',inplace=True)
-
+            
             # transform ftr_vector from array to seperate fields
             data = data['ftr_vector'].apply(pd.Series)
 
@@ -42,8 +42,10 @@ class PredictiveModel:
 
             # prepare target based on prediction horizon (first one is measurement to shift)
             measurements = data[[data.columns[0]]]
-            measurements = measurements.loc[~measurements.duplicated(keep='first')]
-            data['target'] = measurements.shift(-self.horizon, freq = 'H')
+            # this line removed duplicate target values; makes no sense ...
+            # removed by Klemen Kenda, 2020/09/09
+            #measurements = measurements.loc[~measurements.duplicated(keep='first')]
+            data['target'] = measurements.shift(periods = -self.horizon, freq = 'H')
             data = data.dropna() # No need for this any more
 
             # prepare learning data
@@ -73,8 +75,7 @@ class PredictiveModel:
                     pred = evaluation_model.predict(rec.reshape(1,-1))
                     end = time.time()
                     latency = end - start1
-                    print(latency)
-
+                    # print(latency)
                     data_file.write("{}\n".format(latency))
 
             # tesing predictions
