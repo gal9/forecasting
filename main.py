@@ -11,7 +11,8 @@ import requests
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import Ridge
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
+import joblib
 import regression_metrics as additional_metrics
 
 from kafka import KafkaConsumer

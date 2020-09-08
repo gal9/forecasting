@@ -1,5 +1,6 @@
 import sklearn
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
+import joblib
 import pandas as pd
 import collections
 import math
@@ -72,7 +73,7 @@ class PredictiveModel:
                     pred = evaluation_model.predict(rec.reshape(1,-1))
                     end = time.time()
                     latency = end - start1
-                    print latency
+                    print(latency)
 
                     data_file.write("{}\n".format(latency))
 
