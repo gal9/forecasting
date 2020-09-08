@@ -57,9 +57,9 @@ def ping_watchdog():
     try:
         r = requests.get("http://{}:{}{}".format(url, port, path))
     except requests.exceptions.RequestException as e:  # This is the correct syntax
-        print e
+        print(e)
     else:
-        print 'Successful ping at ' + time.ctime()
+        print('Successful ping at ' + time.ctime())
 
     threading.Timer(interval, ping_watchdog).start()
 
@@ -124,7 +124,7 @@ def main():
         conf = json.load(data_file)
 
     # Initialize models
-    print "\n=== Init phase ==="
+    print("\n=== Init phase ===")
 
     models = {}
     algorithm = conf['algorithm']
@@ -144,11 +144,11 @@ def main():
         models[sensor] = {}
         for horizon in horizons:
             models[sensor][horizon] = PredictiveModel(algorithm, sensor, horizon, evaluation_period, error_metrics, evaluation_split_point)
-            print "Initializing model_{}_{}h".format(sensor, horizon)
+            print("Initializing model_{}_{}h".format(sensor, horizon))
 
     # Model learning
     if (args.fit):
-        print "\n=== Learning phase ==="
+        print("\n=== Learning phase ===")
 
         for sensor in sensors:
             for horizon in horizons:
@@ -157,45 +157,45 @@ def main():
                 try:
                     score = models[sensor][horizon].fit(data)
                 except Exception as e:
-                    print e
+                    print(e)
                 end = time.time()
-                print "Model[{0}_{1}h] training time: {2:.1f}s, evaluations: {3})".format(sensor, horizon, end-start, str(score))
+                print("Model[{0}_{1}h] training time: {2:.1f}s, evaluations: {3})".format(sensor, horizon, end-start, str(score)))
 
     # Model saving
     if (args.save):
-        print "\n=== Saving phase ==="
+        print("\n=== Saving phase ===")
 
         for sensor in sensors:
             for horizon in horizons:
                 model = models[sensor][horizon]
                 filename = get_model_file_name(sensor, horizon)
                 model.save(filename)
-                print "Saved model", filename
+                print("Saved model", filename)
 
     # Model loading
     if (args.load):
-        print "\n=== Loading phase ==="
+        print("\n=== Loading phase ===")
 
         for sensor in sensors:
             for horizon in horizons:
                 model = models[sensor][horizon]
                 filename = get_model_file_name(sensor, horizon)
                 model.load(filename)
-                print "Loaded model", filename
+                print("Loaded model", filename)
 
     if (args.watchdog):
-        print "\n=== Watchdog started ==="
+        print("\n=== Watchdog started ===")
         ping_watchdog()
 
     # Live predictions
     if (args.predict):
-        print "\n=== Predictions phase ==="
+        print("\n=== Predictions phase ===")
 
         # Start Kafka consumer
         topics = get_input_data_topics(sensors, horizons)
         consumer = KafkaConsumer(bootstrap_servers=conf['bootstrap_servers'])
         consumer.subscribe(topics)
-        print "Subscribed to topics: ", topics
+        print("Subscribed to topics: ", topics)
 
         # Start Kafka producer
         producer = KafkaProducer(bootstrap_servers=conf['bootstrap_servers'],
@@ -232,15 +232,15 @@ def main():
                 output_topic = "predictions_{}".format(sensor)
                 future = producer.send(output_topic, output)
 
-                print output_topic + ": " + str(output)
+                print(output_topic + ": " + str(output))
 
                 try:
                     record_metadata = future.get(timeout=10)
                 except Exception as e:
-                    print 'Producer error: ' + str(e)
+                    print('Producer error: ' + str(e))
 
             except Exception as e:
-                print 'Consumer error: ' + str(e)
+                print('Consumer error: ' + str(e))
 
 if __name__ == '__main__':
     main()
