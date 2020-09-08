@@ -82,9 +82,11 @@ Example of cluster config file:
 
 ## Requirements
 
-* python 2.7.x
+* python 3.6+
 * kafka-python-1.3.4
 * Anaconda2-4.4.0
     * numpy
     * scipy
     * pandas
+
+You can use `pip install -r requirements.txt` to install all the packages.
