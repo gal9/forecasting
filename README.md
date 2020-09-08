@@ -77,6 +77,9 @@ Example of cluster config file:
 #### Load models and start live predictions (via Kafka)
 ```python main.py -l -p```
 
+#### Load models, start live predictions and check-in regularly to WatchDog
+```python main.py -l -p -w```
+
 #### Start modeling cluster
 ```bash start_cluster.sh  -l -p```
 
