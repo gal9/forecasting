@@ -65,16 +65,16 @@ Example of cluster config file:
 
 ## Examples:
 
-#### Fiting models
+#### Fitting models
 ```python main.py -f```
 
-#### Firing and saving models
+#### Fitting and saving models
 ```python main.py -f -s```
 
 #### Loading models
 ```python main.py -l```
 
-#### Start live predictions (via Kafka)
+#### Load models and start live predictions (via Kafka)
 ```python main.py -l -p```
 
 #### Start modeling cluster
