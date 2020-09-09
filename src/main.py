@@ -121,7 +121,7 @@ def main():
     args = parser.parse_args()
 
     #Read config file
-    with open(args.config) as data_file:
+    with open("config/" + args.config) as data_file:
         conf = json.load(data_file)
 
     # Initialize models
