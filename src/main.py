@@ -9,9 +9,11 @@ import sklearn
 import threading
 import requests
 
+# adding lib subdirectory
+sys.path.insert(0,'./lib')
+
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import Ridge
-# from sklearn.externals import joblib
 import joblib
 import regression_metrics as additional_metrics
 
