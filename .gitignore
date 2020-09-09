@@ -2,3 +2,4 @@ pythonenv*/
 __pycache__/
 test/data/
 src/performance_rf.txt
+src/tests/performance_rf.txt
