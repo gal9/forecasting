@@ -92,3 +92,6 @@ Alternetively, process managers like `PM2` or `pman` would be a better fit for t
 * python 3.6+
 
 You can use `pip install -r requirements.txt` to install all the packages.
+
+## Unit tests
+Unit tests are available in `src/tests`. They are invoked with: `python test.py`.
