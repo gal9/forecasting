@@ -37,8 +37,8 @@ def create_testing_file():
 
     return filepath
 
-def create_model_instance():
-        algorithm = "sklearn.ensemble.RandomForestRegressor(n_estimators=100, n_jobs=16, random_state=0)"
+def create_model_instance(model_string):
+        algorithm = model_string
         sensor = "N1"
         horizon = 1
         evaluation_period = 72
@@ -57,7 +57,7 @@ def create_model_instance():
 class SimpleWidgetTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.model = create_model_instance()
+        self.model = create_model_instance("sklearn.ensemble.RandomForestRegressor(n_estimators=100, n_jobs=16, random_state=0)")
 
 
 class TestClassProperties(SimpleWidgetTestCase):
@@ -143,7 +143,7 @@ class TestModelSerialization(SimpleWidgetTestCase):
         dataset_file = create_testing_file()
         
         # create saved file of dummy model
-        dummy_model = create_model_instance()
+        dummy_model = create_model_instance("sklearn.ensemble.RandomForestRegressor(n_estimators=100, n_jobs=16, random_state=0)")
         dummy_model.fit(dataset_file)
         dummy_model.save(model_file)
 
@@ -232,6 +232,26 @@ class TestModelEvaluation(SimpleWidgetTestCase):
 
         # clean up
         os.remove(f)
+
+class LGBMTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.model = create_model_instance("lightgbm.LGBMRegressor()")
+
+
+class TestClassLGBMProperties(LGBMTestCase):
+    
+    def test_sensor(self):
+        self.assertEqual(self.model.sensor, "N1")
+
+    def test_horizon(self):
+        self.assertEqual(self.model.horizon, 1)
+
+    def test_eval_periode(self):
+        self.assertEqual(self.model.eval_periode, 72)
+
+    def test_split_point(self):
+    	self.assertEqual(self.model.split_point, 0.8)
     
 if __name__ == '__main__':
     unittest.main(verbosity=2)
