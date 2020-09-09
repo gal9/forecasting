@@ -1,8 +1,8 @@
 # Batch Learning Forecasting Component
 
-Enables using external predictive models from  [Scikit Learn](http://scikit-learn.org/stable/index.html) library (for example [Random Forest Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)) implementation . Fitting, saving, loading and live predict is enabled. Live predictions work via Kafka streams (reading feature vectors from Kafka and writing predictions to Kafka).
+The component enables using external predictive models from  [Scikit Learn](http://scikit-learn.org/stable/index.html) library (for example [Random Forest Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)) implementation in a streaming scenario. Fitting, saving, loading and live prediction are enabled. Live predictions work via Kafka streams (reading feature vectors from Kafka and writing predictions to Kafka).
 
-Predictive model is designed in an decentralized fashion, meaning that several instances (submodels) will be created and used for each specifc sensor and horizon (`#submodels = #sensors * #horiozons`). Decentralized architecture enables paralelization.
+The predictive model is designed in an decentralized fashion, meaning that several instances (submodels) will be created and used for each specific sensor and horizon (`#submodels = #sensors * #horiozons`). Decentralized architecture enables parallelization.
 
 The code is available in the `src/` directory.
 
@@ -43,7 +43,7 @@ Example of config file:
 ```
 
 ## Running multiple instances:
-Modeling instance is loosely coupled, therefore it can be started as multiple processes (simple parallelization). For this purpose, we can use `start_cluster.sh` script with the same input parameters as `main.py`. Cluster is defined in a separate config file `cluster.json`. The script runs several instances of `main.py` in a tmux session (named `modeling_cluster`), each under a different window.
+The forecasting instance is loosely coupled to the system via Kafka streaming API, therefore it can be started as multiple processes (simple parallelization). For this purpose, we can use `start_cluster.sh` script with the same input parameters as `main.py`. Cluster is defined in a separate config file `cluster.json`. The script runs several instances of `main.py` in a tmux session (named `modeling_cluster`), each under a different window.
 
 #### Usage
 ```bash start_cluster.sh [-f] [-s] [-l] [-p]```
@@ -58,6 +58,8 @@ Example of cluster config file:
 ["N5", "N6"]
 ["N7", "N8"]
 ```
+
+Alternetively, process managers like `PM2` or `pman` would be a better fit for the task than `tmux`.
 
 ## Assumptions:
 - **Training data**: all the training files should be stored in a subfolder called `/data/fused`. Data should be stored as json objects per line (e.g. `{ "timestamp": 1459926000, "ftr_vector": [1, 2, 3]}`). Separate file for each sensor and prediction horizon. Files should be named the same as input kafka topics, that is `{sensor}_{horizon}h` (e.g. `sensor1_3h.json`)
