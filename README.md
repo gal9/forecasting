@@ -1,4 +1,4 @@
-# Batch Learning Component
+# Batch Learning Forecasting Component
 
 Enables using external predictive models from  [Scikit Learn](http://scikit-learn.org/stable/index.html) library (for example [Random Forest Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)) implementation . Fitting, saving, loading and live predict is enabled. Live predictions work via Kafka streams (reading feature vectors from Kafka and writing predictions to Kafka).
 
