@@ -87,6 +87,28 @@ Example of cluster config file:
 
 ## Requirements
 
-* python 3.6+
+* Python 3.6+
 
 You can use `pip install -r requirements.txt` to install all the packages.
+
+```
+codespace:~/workspace/forecasting/src/tests$ python test.py
+test_eval_periode (__main__.TestClassProperties) ... ok
+test_horizon (__main__.TestClassProperties) ... ok
+test_sensor (__main__.TestClassProperties) ... ok
+test_split_point (__main__.TestClassProperties) ... ok
+test_evaluation_buffers (__main__.TestModelEvaluation) ... ok
+test_evaluation_score (__main__.TestModelEvaluation) ... ok
+test_evaluation_warning (__main__.TestModelEvaluation) ... ok
+test_perfect_score (__main__.TestModelEvaluation) ... ok
+test_predictability_index (__main__.TestModelEvaluation) ... ok
+test_fit (__main__.TestModelFunctionality) ... ok
+test_predict (__main__.TestModelFunctionality) ... ok
+test_load (__main__.TestModelSerialization) ... ok
+test_save (__main__.TestModelSerialization) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.096s
+
+OK
+```
