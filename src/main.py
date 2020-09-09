@@ -34,7 +34,7 @@ def get_model_file_name(sensor, horizon):
     return filepath
 
 def get_data_file_name(sensor, horizon):
-    subdir = '../data/fused'
+    subdir = '../../data/fused'
     if not os.path.isdir(subdir):
         os.makedirs(subdir)
 
@@ -74,14 +74,14 @@ def main():
         "--config",
         dest="config",
         default="config.json",
-        help=u"Config file",
+        help=u"Config file located in ./config/ directory",
     )
 
     parser.add_argument(
         "-f",
         "--fit",
         action='store_true',
-        help=u"Learning the model from dataset in subfolder '/data/fused'",
+        help=u"Learning the model from dataset in subfolder '../../data/fused'",
     )
 
     parser.add_argument(

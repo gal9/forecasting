@@ -1,11 +1,13 @@
 # Batch Learning Component
 
-Enables using external predictive models from  [Scikit Learn](http://scikit-learn.org/stable/index.html) library (for example [Random Forest Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)) implementation . Fitting, saving, loading and live predict is enabled. Live predictions works via Kafka stream.
+Enables using external predictive models from  [Scikit Learn](http://scikit-learn.org/stable/index.html) library (for example [Random Forest Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)) implementation . Fitting, saving, loading and live predict is enabled. Live predictions work via Kafka streams (reading feature vectors from Kafka and writing predictions to Kafka).
 
 Predictive model is designed in an decentralized fashion, meaning that several instances (submodels) will be created and used for each specifc sensor and horizon (`#submodels = #sensors * #horiozons`). Decentralized architecture enables paralelization.
 
+The code is available in the `src/` directory.
+
 #### Usage
-```main.py [-h] [-c CONFIG] [-f] [-s] [-l] [-p]```
+```python main.py [-h] [-c CONFIG] [-f] [-s] [-l] [-p]```
 
 #### Optional parameters:
 | Short   |      Long     |  Description |
@@ -18,7 +20,7 @@ Predictive model is designed in an decentralized fashion, meaning that several i
 | `-p` | `--predict` | Start live predictions (via Kafka) |
 
 #### Config file:
-Example of config file, where the useres spcifies kafka server address, which scikit algorithm to use, prediction horizons and sesnsors for which the model will be learned/loaded/saved/predicted.
+Config file specifies the Kafka server address, which scikit algorithm to use, prediction horizons and sesnsors for which the model will be learned/loaded/saved/predicted. Config files are stored in `src/config/`.
 
 Parameters:
 - **bootstrap_servers**: string (or list of `host[:port]` strings) that the consumer should contact to bootstrap initial cluster metadata
