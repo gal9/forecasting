@@ -57,14 +57,16 @@ def ping_watchdog():
     port= 3001
     path= "/ping?id=5&secret=b9347c25aba4d3ba6e8f61d05fd1c011"
 
-    try:
-        r = requests.get("http://{}:{}{}".format(url, port, path))
-    except requests.exceptions.RequestException as e:  # This is the correct syntax
-        print(e)
-    else:
-        print('Successful ping at ' + time.ctime())
+    # Continue sending pings only if main thread is still alive
+    if(threading.main_thread().is_alive()):
+        try:
+            r = requests.get("http://{}:{}{}".format(url, port, path))
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+            print(e)
+        else:
+            print('Successful ping at ' + time.ctime())
 
-    threading.Timer(interval, ping_watchdog).start()
+        threading.Timer(interval, ping_watchdog).start()
 
 def main():
     parser = argparse.ArgumentParser(description="Modeling component")
